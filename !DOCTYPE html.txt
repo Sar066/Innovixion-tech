@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Notes</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Online Notes</h1>
+    </header>
+    <div id="notes-container">
+        <!-- Notes will be dynamically added here -->
+    </div>
+    <div class="add-note-container">
+        <textarea id="note-content" placeholder="Write your note here..."></textarea>
+        <button id="add-note">Add Note</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
