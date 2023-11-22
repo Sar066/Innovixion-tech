@@ -1,16 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie App</title>
-</head>
-<body>
-    <h1>Movies</h1>
-    <div id="movieList"></div>
-    <div id="videoPlayer"></div>
+const apiKey = 'YOUR_TMDB_API_KEY';
+const baseUrl = 'https://api.themoviedb.org/3';
+const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
-    <script src="app.js"></script>
-</body>
-</html>
+// Function to fetch popular movies
+async function fetchPopularMovies() {
+    const response = await fetch(`${baseUrl}/movie/popular?api_key=${apiKey}`);
+    const data = await response.json();
+    return data.results;
+}
+
+// Function to fetch movie details
+async function fetchMovieDetails(movieId) {
+    const response = await fetch(`${baseUrl}/movie/${movieId}?api_key=${apiKey}`);
+    const data = await response.json();
+    return data;
+}
+
+// Function to display movies on the webpage
+function displayMovies(movies) {
+    const movieListContainer = document.getElementById('movieList');
+    movieListContainer.innerHTML = '';
+
+    movies.forEach(movie => {
+        const movieCard = document.createElement('div');
+        movieCard.innerHTML = `<h2>${movie.title}</h2>
+                              <img src="${imageBaseUrl}${movie.poster_path}" alt="${movie.title}" />
+                              <button onclick="playMovie(${movie.id})">Play</button>`;
+        movieListContainer.appendChild(movieCard);
+    });
+}
+
+// Function to play a movie
+async function playMovie(movieId) {
+    const movieDetails = await fetchMovieDetails(movieId);
+    const videoPlayerContainer = document.getElementById('videoPlayer');
+    videoPlayerContainer.innerHTML = `<h2>${movieDetails.title}</h2>
+                                       <iframe width="560" height="315" src="https://www.youtube.com/embed/${movieDetails.trailer_key}" frameborder="0" allowfullscreen></iframe>`;
+}
+
+// Fetch popular movies and display them on the webpage
+async function initializeApp() {
+    const popularMovies = await fetchPopularMovies();
+    displayMovies(popularMovies);
+}
+
+// Call the initialization function
+initializeApp();
