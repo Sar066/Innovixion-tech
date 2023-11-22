@@ -1,0 +1,42 @@
+// Mock product data
+const products = [
+    { id: 1, name: 'Product 1', price: 10 },
+    { id: 2, name: 'Product 2', price: 20 },
+    { id: 3, name: 'Product 3', price: 30 }
+];
+
+// Mock user authentication
+const isAuthenticated = true;
+
+// Function to display products on the webpage
+function displayProducts() {
+    const productListContainer = document.getElementById('productList');
+    productListContainer.innerHTML = '';
+
+    products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.innerHTML = `<h2>${product.name}</h2>
+                                 <p>${product.price} USD</p>
+                                 <button onclick="addToCart(${product.id})">Add to Cart</button>`;
+        productListContainer.appendChild(productCard);
+    });
+}
+
+// Function to add a product to the cart
+function addToCart(productId) {
+    // Implement logic to add the product to the cart
+    console.log(`Product ${productId} added to the cart.`);
+}
+
+// Function to view the cart (dummy function for demonstration)
+function viewCart() {
+    if (isAuthenticated) {
+        alert('Redirect to the cart page');
+    } else {
+        alert('Please log in to view the cart.');
+    }
+}
+
+// Call the function to display products
+displayProducts();
+
